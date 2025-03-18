@@ -3,11 +3,21 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import EXIF from "exif-js";
 
+interface ImageMetadata {
+  make?: string;
+  model?: string;
+  orientation?: number;
+  dateTime?: string;
+  gpsLatitude?: number;
+  gpsLongitude?: number;
+  [key: string]: string | number | undefined;
+}
+
 export default function Home() {
   const [image, setImage] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [metadata, setMetadata] = useState<Record<string, string | number> | null>(null);
+  const [metadata, setMetadata] = useState<ImageMetadata | null>(null);
   const router = useRouter();
 
   // Open Camera
@@ -37,7 +47,7 @@ export default function Home() {
         .then((res) => res.blob())
         .then((blob) => {
           const objectUrl = URL.createObjectURL(blob);
-          EXIF.getData(objectUrl, function (this: { [key: string]: string | number }) {
+          EXIF.getData(objectUrl, function (this: ImageMetadata) {
             const allMetaData = EXIF.getAllTags(this);
             setMetadata(allMetaData);
           });

@@ -2,9 +2,19 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+interface ImageMetadata {
+  make?: string;
+  model?: string;
+  orientation?: number;
+  dateTime?: string;
+  gpsLatitude?: number;
+  gpsLongitude?: number;
+  [key: string]: string | number | undefined; // For any additional metadata properties
+}
+
 export default function MetadataPage() {
   const [image, setImage] = useState<string | null>(null);
-  const [metadata, setMetadata] = useState<any>(null);
+  const [metadata, setMetadata] = useState<ImageMetadata | null>(null);
   const router = useRouter();
 
   useEffect(() => {
