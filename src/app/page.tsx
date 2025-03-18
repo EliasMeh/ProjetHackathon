@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Camera from '@/app/components/camera';
-import ImageUpload from '@/app/components/imageUpload';
+import Camera from '@/app/composants/Camera';
+import ImageUpload from '@/app/composants/ImageUpload';
 
 export default function HomePage() {
   const router = useRouter();
