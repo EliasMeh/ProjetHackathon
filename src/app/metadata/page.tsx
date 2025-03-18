@@ -3,16 +3,52 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface ImageMetadata {
-  Make?: string;
-  Model?: string;
-  Orientation?: number;
-  DateTime?: string;
-  GPSLatitude?: number[];
-  GPSLongitude?: number[];
-  GPSLatitudeRef?: string;
-  GPSLongitudeRef?: string;
-  [key: string]: string | number | number[] | undefined;
-}
+    // Basic Image Information
+    Make?: string;
+    Model?: string;
+    Orientation?: number;
+    DateTime?: string;
+    ModifyDate?: string;
+    DateTimeOriginal?: string;
+    CreateDate?: string;
+  
+    // Camera Settings
+    ExposureTime?: number;
+    FNumber?: number;
+    ISOSpeedRatings?: number;
+    ShutterSpeedValue?: number;
+    ApertureValue?: number;
+    FocalLength?: number;
+    FocalLengthIn35mmFilm?: number;
+    Flash?: number;
+    WhiteBalance?: number;
+  
+    // Image Details
+    PixelXDimension?: number;
+    PixelYDimension?: number;
+    ColorSpace?: number;
+    ImageWidth?: number;
+    ImageHeight?: number;
+    BitsPerSample?: number;
+    ImageDescription?: string;
+    Software?: string;
+  
+    // GPS Information
+    GPSLatitude?: number[];
+    GPSLongitude?: number[];
+    GPSLatitudeRef?: string;
+    GPSLongitudeRef?: string;
+    GPSAltitude?: number;
+    GPSAltitudeRef?: number;
+    GPSTimeStamp?: number[];
+    GPSDateStamp?: string;
+  
+    // Copyright Information
+    Copyright?: string;
+    Artist?: string;
+  
+    [key: string]: string | number | number[] | undefined;
+  }
 
 export default function MetadataPage() {
   const [image, setImage] = useState<string | null>(null);

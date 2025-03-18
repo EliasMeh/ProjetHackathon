@@ -70,13 +70,22 @@ export default function Home() {
       img.src = event.target.result as string;
       
       img.onload = (): void => {
-        type EXIFThis = {
-          exifdata?: ImageMetadata;
-        };
+        EXIF.getData(img as unknown as string, function(this: unknown) {
+          // Get all available tags
+          const allMetaData: ImageMetadata = {};
+          const exif = EXIF.getAllTags(this);
+          
+          // Preserve raw EXIF data
+          Object.keys(exif).forEach(key => {
+            if (exif[key] !== undefined) {
+              allMetaData[key] = exif[key];
+            }
+          });
   
-        EXIF.getData(img as unknown as string, function(this: EXIFThis) {
-          const allMetaData = EXIF.getAllTags(this) as ImageMetadata;
           setMetadata(allMetaData);
+  
+          // Log all available metadata for debugging
+          console.log('Raw EXIF data:', exif);
         });
       };
     };
