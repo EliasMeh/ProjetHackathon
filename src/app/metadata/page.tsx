@@ -1,5 +1,4 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
 import { Suspense, type ReactElement } from 'react';
 
 interface Metadata {
@@ -9,21 +8,18 @@ interface Metadata {
 }
 
 const MetadataContent = (): ReactElement => {
-  const params = useSearchParams();
-  const image = params.get('image') ?? '';
-  const decodedImage = decodeURIComponent(image);
-
+  const storedImage = sessionStorage.getItem('currentImage') ?? '';
   const metadata: Metadata = {
-    source: image.startsWith('blob:') ? 'Camera' : 'File Upload',
+    source: storedImage.startsWith('blob:') ? 'Camera' : 'File Upload',
     timestamp: new Date().toISOString(),
   };
 
   return (
     <div className="p-4">
       <h1 className="text-2xl mb-4">Image Metadata</h1>
-      {decodedImage && (
+      {storedImage && (
         <img 
-          src={decodedImage} 
+          src={storedImage} 
           alt="Submitted" 
           className="mb-4 max-w-full h-auto"
         />

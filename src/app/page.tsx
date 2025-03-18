@@ -13,13 +13,19 @@ export default function HomePage() {
   };
 
   const handleUpload = (file: File) => {
-    const objectUrl = URL.createObjectURL(file);
-    setSelectedImage(objectUrl);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        setSelectedImage(e.target.result.toString());
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = () => {
     if (selectedImage) {
-      router.push(`/metadata?image=${encodeURIComponent(selectedImage)}`);
+      sessionStorage.setItem('currentImage', selectedImage);
+      router.push('/metadata');
     }
   };
 
