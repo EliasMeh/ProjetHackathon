@@ -1,13 +1,14 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
+import { Suspense, type ReactElement } from 'react';
 
 interface Metadata {
   source: string;
   timestamp: string;
-  [key: string]: string; // Index signature for type safety
+  [key: string]: string;
 }
 
-export default function MetadataPage() {
+const MetadataContent = (): ReactElement => {
   const params = useSearchParams();
   const image = params.get('image') ?? '';
   const decodedImage = decodeURIComponent(image);
@@ -36,4 +37,14 @@ export default function MetadataPage() {
       </ul>
     </div>
   );
-}
+};
+
+const MetadataPage = (): ReactElement => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MetadataContent />
+    </Suspense>
+  );
+};
+
+export default MetadataPage;
